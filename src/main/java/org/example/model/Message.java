@@ -9,7 +9,13 @@ public class Message {
     private Date created; //Message timestamp
     private String author; //Message author
 
-    public Message(long id, String message, String author) {
+    public Message()
+    {
+        //Obligatory no-op constructor
+    }
+
+    public Message(long id, String message, String author)
+    {
         this.id = id;
         this.message = message;
         this.author = author;
