@@ -1,7 +1,9 @@
 package org.example.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
+@XmlRootElement //This annotation uses JAXB to convert the output of this class to parsable XML
 public class Message {
 
     private long id; //Message UUID

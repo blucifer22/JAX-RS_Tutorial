@@ -19,11 +19,11 @@ public class MessageResource {
      * basic "list all messages" response.
      * It is annotated with @GET to indicate this to Jersey
      * Additionally, it is annotated with @Produces to so that the
-     * servlet knows it will be receiving plain text.
-     * @return A plaintext "Hello world!" String
+     * servlet knows it will be receiving APPLICATION_XML.
+     * @return An XML representation of all the messages on the server
      */
     @GET //Maps the getter method to the GET HTTP method!
-    @Produces(MediaType.TEXT_PLAIN) //Indicates that the response is plain text
+    @Produces(MediaType.APPLICATION_XML) //Indicates that the response is plain text
     public List<Message> getMessages()
     {
         return messageService.getAllMessages();
