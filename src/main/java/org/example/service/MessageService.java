@@ -12,6 +12,15 @@ public class MessageService {
     //Since this is static future requests point to the same instance (until server is reset)
     private Map<Long, Message> messages = DatabaseClass.getMessages();
 
+    public MessageService()
+    {
+        messages.put(1L, new Message(1, "Hello World!", "Marc"));
+        messages.put(2L, new Message(2, "Hello Embarc!", "Kevin"));
+        messages.put(3L, new Message(3, "Hello Luksusowa!", "Sid"));
+        messages.put(4L, new Message(4,
+                "I think Sid might have a bit too much blood in his alcohol-stream", "Craig"));
+    }
+
     public List<Message> getAllMessages()
     {
         return new ArrayList<>(messages.values());
