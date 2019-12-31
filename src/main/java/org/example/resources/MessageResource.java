@@ -24,7 +24,7 @@ public class MessageResource {
      * @return An XML representation of all the messages on the server
      */
     @GET //Maps the getter method to the GET HTTP method!
-    @Produces(MediaType.APPLICATION_XML) //Indicates that the response is XML
+    @Produces(MediaType.APPLICATION_JSON) //Indicates that the response is XML
     public List<Message> getMessages()
     {
         return messageService.getAllMessages();
@@ -32,7 +32,7 @@ public class MessageResource {
 
     @GET
     @Path("/{messageId}") //Map to subsequent path /messages/{messageId}
-    @Produces(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_JSON)
     //Uses the PathParam feature to grab the parameter from the URL
     //Furthermore, this utilizes Jersey's inbuilt autoboxing and unboxing for PathParams
     public Message getMessage(@PathParam("messageId") long messageId)
