@@ -11,6 +11,11 @@ public class ProfileService {
 
     private Map<String, Profile> profiles = DatabaseClass.getProfiles();
 
+    public ProfileService()
+    {
+        profiles.put("Marc", new Profile(1L, "blucifer22", "Marc", "Chmielewski"));
+    }
+
     public List<Profile> getAllProfiles()
     {
         return new ArrayList<Profile>(profiles.values());
@@ -30,7 +35,7 @@ public class ProfileService {
 
     public Profile updateProfile(Profile profile)
     {
-        if(profile.getId() <= 0)
+        if(profile.getProfileName().isEmpty())
         {
             return null;
         }
