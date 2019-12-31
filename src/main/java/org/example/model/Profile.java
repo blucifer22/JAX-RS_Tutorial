@@ -2,6 +2,11 @@ package org.example.model;
 
 import java.util.Date;
 
+/**
+ * This class defines a user profile for the Messenger app. Profile attributes include
+ * a UUID (id), profile name (profileName), first and last name, and the Date of
+ * creation (created).
+ */
 public class Profile {
 
     private long id;
@@ -12,7 +17,7 @@ public class Profile {
 
     public Profile()
     {
-        //empty-op constructor
+        //empty-op constructor (For XML/JSON scut)
     }
 
     public Profile(long id, String profileName, String firstName, String lastName) {
