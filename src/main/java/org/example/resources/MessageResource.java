@@ -3,10 +3,7 @@ package org.example.resources;
 import org.example.model.Message;
 import org.example.service.MessageService;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
@@ -28,6 +25,14 @@ public class MessageResource {
     public List<Message> getMessages()
     {
         return messageService.getAllMessages();
+    }
+
+    @POST //Map the method to the HTTP POST method
+    @Consumes(MediaType.APPLICATION_JSON) //This annotation tells Jersey that it will be accepting JSON input
+    @Produces(MediaType.APPLICATION_JSON) //This annotation tells Jersey that it will be producing JSON output
+    public Message addMessage(Message message)
+    {
+        return messageService.addMessage(message);
     }
 
     @GET
