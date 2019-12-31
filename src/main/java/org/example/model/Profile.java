@@ -1,5 +1,8 @@
 package org.example.model;
 
+import com.sun.xml.txw2.annotation.XmlElement;
+
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
 /**
@@ -7,6 +10,7 @@ import java.util.Date;
  * a UUID (id), profile name (profileName), first and last name, and the Date of
  * creation (created).
  */
+@XmlRootElement
 public class Profile {
 
     private long id;
