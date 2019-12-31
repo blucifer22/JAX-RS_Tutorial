@@ -54,6 +54,7 @@
             <artifactId>jersey-media-json-binding</artifactId>
         </dependency>
         -->
+        <!-- This group of dependencies fixed JAXB. Not quite sure why but it works...-->
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
