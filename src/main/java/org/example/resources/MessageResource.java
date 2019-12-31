@@ -27,6 +27,25 @@ public class MessageResource {
         return messageService.getAllMessages();
     }
 
+    @PUT
+    @Path("/{messageId}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Message updateMessage(@PathParam("messageId") long id, Message message)
+    {
+        message.setId(id);
+        return messageService.updateMessage(message);
+    }
+
+    @DELETE
+    @Path("/{messageId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public void deleteMessage(@PathParam("messageId") long id)
+    {
+        messageService.removeMessage(id);
+    }
+
+
     @POST //Map the method to the HTTP POST method
     @Consumes(MediaType.APPLICATION_JSON) //This annotation tells Jersey that it will be accepting JSON input
     @Produces(MediaType.APPLICATION_JSON) //This annotation tells Jersey that it will be producing JSON output
