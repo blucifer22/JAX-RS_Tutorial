@@ -22,8 +22,18 @@ public class MessageResource {
      */
     @GET //Maps the getter method to the GET HTTP method!
     @Produces(MediaType.APPLICATION_JSON) //Indicates that the response is XML
-    public List<Message> getMessages()
+    public List<Message> getMessages(@QueryParam("year") int year,
+                                     @QueryParam("start") int start,
+                                     @QueryParam("size") int size)
     {
+        if(year > 0)
+        {
+            return messageService.getAllMessagesForYear(year);
+        }
+        if(start > 0 && size > 0)
+        {
+            return messageService.getAllMessagesPaginated(start, size);
+        }
         return messageService.getAllMessages();
     }
 
