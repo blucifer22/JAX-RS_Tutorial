@@ -23,7 +23,7 @@ public class MessageResource {
      * @return An XML representation of all the messages on the server
      */
     @GET //Maps the getter method to the GET HTTP method!
-    @Produces(MediaType.APPLICATION_XML) //Indicates that the response is plain text
+    @Produces(MediaType.APPLICATION_XML) //Indicates that the response is XML
     public List<Message> getMessages()
     {
         return messageService.getAllMessages();
