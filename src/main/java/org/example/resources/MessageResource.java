@@ -73,4 +73,10 @@ public class MessageResource {
         return messageService.getMessage(messageId);
     }
 
+    //Delegate the responsibility for comments to the CommentResource
+    @Path("/{messageId}/comments") //If the path asks for comments...
+    public CommentResource getCommentResource()
+    {
+        return new CommentResource();
+    }
 }
