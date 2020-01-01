@@ -1,22 +1,51 @@
 package org.example.resources;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import org.example.model.Comment;
+import org.example.service.CommentService;
+
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Path("/")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class CommentResource {
 
+    private CommentService commentService = new CommentService();
+
     @GET
-    public String test()
+    public List<Comment> getAllComments(@PathParam("messageId") long messageId)
     {
-        return "TEST!";
+        return commentService.getAllComments(messageId);
     }
 
     @GET
-    @Path("/{commentId}") //Note: Since the parent, MessageResource method had the messageId with it it can grab that
-    public String test2(@PathParam("messageId") long messageId, @PathParam("commentId") long commentId)
+    @Path("/{commentId}")
+    public Comment getComment(@PathParam("messageId") long messageId, @PathParam("commentId") long commentId)
     {
-        return "Method to return comment ID: " + commentId + " for message " + messageId;
+        return commentService.getComment(messageId, commentId);
+    }
+
+    @POST
+    public Comment addComment(@PathParam("messageId") long messageId, Comment comment)
+    {
+        return commentService.addComment(messageId, comment);
+    }
+
+    @PUT
+    @Path("/{commentId}")
+    public Comment updateMessage(@PathParam("messageId") long messageId,
+                                 @PathParam("commentId") long commentId, Comment comment)
+    {
+        comment.setId(commentId);
+        return commentService.updateComment(messageId, comment);
+    }
+
+    @DELETE
+    @Path("/{commentId}")
+    public void deleteComment(@PathParam("messageId") long messageId, @PathParam("commentId") long commentId)
+    {
+        commentService.removeComment(messageId, commentId);
     }
 }
