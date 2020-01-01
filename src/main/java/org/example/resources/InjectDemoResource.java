@@ -2,7 +2,10 @@ package org.example.resources;
 
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.UriInfo;
 
 @Path("/injectdemo")
 @Produces(MediaType.TEXT_PLAIN)
@@ -24,5 +27,15 @@ public class InjectDemoResource {
                                             @CookieParam("name") String cookie)
     {
         return "Matrix param: " + matrixParam + " Header param: " + header + " Cookie: " + cookie;
+    }
+
+    @GET
+    @Path("/context")
+    //uriInfo contains just about everything from the URI, ditto for HTTPHeaders
+    public String getParamsUsingContext(@Context UriInfo uriInfo, @Context HttpHeaders httpHeaders)
+    {
+        String path = uriInfo.getAbsolutePath().toString();
+        String cookies = httpHeaders.getCookies().toString();
+        return "Path: " + path + " Cookies: " + cookies;
     }
 }

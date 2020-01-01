@@ -1,6 +1,7 @@
 package org.example.resources;
 
 import org.example.model.Message;
+import org.example.resources.beans.MessageFilterBean;
 import org.example.service.MessageService;
 
 import javax.ws.rs.*;
@@ -21,18 +22,16 @@ public class MessageResource {
      * @return An XML representation of all the messages on the server
      */
     @GET //Maps the getter method to the GET HTTP method!
-    @Produces(MediaType.APPLICATION_JSON) //Indicates that the response is XML
-    public List<Message> getMessages(@QueryParam("year") int year,
-                                     @QueryParam("start") int start,
-                                     @QueryParam("size") int size)
+    @Produces(MediaType.APPLICATION_JSON) //Indicates that the response is JSON
+    public List<Message> getMessages(@BeanParam MessageFilterBean filterBean)
     {
-        if(year > 0)
+        if(filterBean.getYear() > 0)
         {
-            return messageService.getAllMessagesForYear(year);
+            return messageService.getAllMessagesForYear(filterBean.getYear());
         }
-        if(start >= 0 && size > 0)
+        if(filterBean.getStart() >= 0 && filterBean.getSize() > 0)
         {
-            return messageService.getAllMessagesPaginated(start, size);
+            return messageService.getAllMessagesPaginated(filterBean.getStart(), filterBean.getSize());
         }
         return messageService.getAllMessages();
     }
