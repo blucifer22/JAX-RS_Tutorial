@@ -5,8 +5,12 @@ import org.example.resources.beans.MessageFilterBean;
 import org.example.service.MessageService;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @Path("/messages") //Annotation that adds this class to the /messages of the URL path (Top-Level annotation)
@@ -59,11 +63,16 @@ public class MessageResource {
     @POST //Map the method to the HTTP POST method
     @Consumes(MediaType.APPLICATION_JSON) //This annotation tells Jersey that it will be accepting JSON input
     @Produces(MediaType.APPLICATION_JSON) //This annotation tells Jersey that it will be producing JSON output
-    public Response addMessage(Message message)
+    public Response addMessage(Message message, @Context UriInfo uriInfo) throws URISyntaxException
     {
         Message newMessage = messageService.addMessage(message);
+        String newId = String.valueOf(newMessage.getId());
+        URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build(); //Use the UriInfo builder to add the id
         //Practice using the ResponseBuilder
-        return Response.status(Response.Status.CREATED).entity(newMessage).build();
+        return Response.
+                created(uri). //Return the status code (201, resource created) and location header
+                entity(newMessage). //Return the message
+                build(); //Build the response
     }
 
     @GET
