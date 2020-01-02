@@ -6,6 +6,7 @@ import org.example.service.MessageService;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("/messages") //Annotation that adds this class to the /messages of the URL path (Top-Level annotation)
@@ -58,9 +59,11 @@ public class MessageResource {
     @POST //Map the method to the HTTP POST method
     @Consumes(MediaType.APPLICATION_JSON) //This annotation tells Jersey that it will be accepting JSON input
     @Produces(MediaType.APPLICATION_JSON) //This annotation tells Jersey that it will be producing JSON output
-    public Message addMessage(Message message)
+    public Response addMessage(Message message)
     {
-        return messageService.addMessage(message);
+        Message newMessage = messageService.addMessage(message);
+        //Practice using the ResponseBuilder
+        return Response.status(Response.Status.CREATED).entity(newMessage).build();
     }
 
     @GET
