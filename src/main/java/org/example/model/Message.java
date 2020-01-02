@@ -13,7 +13,7 @@ public class Message {
     private String message; //Message contents
     private Date created; //Message timestamp
     private String author; //Message author
-    private Map<Long, Comment> comments = new HashMap<>(); //Map of Message comments
+    private static Map<Long, Comment> comments = new HashMap<>(); //Map of Message comments
 
     public Message()
     {
