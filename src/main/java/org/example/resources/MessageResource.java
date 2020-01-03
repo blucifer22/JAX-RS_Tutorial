@@ -81,9 +81,47 @@ public class MessageResource {
     @Produces(MediaType.APPLICATION_JSON)
     //Uses the PathParam feature to grab the parameter from the URL
     //Furthermore, this utilizes Jersey's inbuilt autoboxing and unboxing for PathParams
-    public Message getMessage(@PathParam("messageId") long messageId)
+    public Message getMessage(@PathParam("messageId") long messageId, @Context UriInfo uriInfo)
     {
-        return messageService.getMessage(messageId);
+        Message message = messageService.getMessage(messageId);
+        message.addLink(getUriForSelf(uriInfo, message), "self");
+        message.addLink(getUriForProfile(uriInfo, message), "profile");
+        message.addLink(getUriForComments(uriInfo, message), "comments");
+        return message;
+    }
+
+    /**
+     * These are HATEOAS helper methods to construct relational URIs as strings
+     * @param uriInfo Uses the @Context param to extract the base URI from the hosting service.
+     * @param message Determines the target message to extract additional information from.
+     * @return A String version of the relational URI
+     */
+    private String getUriForSelf(@Context UriInfo uriInfo, Message message)
+    {
+        return uriInfo.getBaseUriBuilder() //Get the base URI
+        .path(MessageResource.class) //Get the path from the class (/messages)
+        .path(Long.toString(message.getId())) //Get the messageId
+        .build().toString(); //Build and toString
+    }
+
+    private String getUriForProfile(UriInfo uriInfo, Message message)
+    {
+        return uriInfo.getBaseUriBuilder() //Get the base URI
+                .path(ProfileResource.class) //Get the path from the class (/profiles)
+                .path(message.getAuthor()) //Get the author
+                .build()
+                .toString(); //Build and toString
+    }
+
+    private String getUriForComments(UriInfo uriInfo, Message message)
+    {
+        return uriInfo.getBaseUriBuilder() //Get the base URI
+                .path(MessageResource.class) //Get the path from the class (/messages)
+                .path(MessageResource.class, "getCommentResource") //Access the subresource
+                .path(CommentResource.class) //Add the subresource path
+                .resolveTemplate("messageId", message.getId()) //Populate the messageId field with the message ID
+                .build()
+                .toString(); //Build and toString
     }
 
     //Delegate the responsibility for comments to the CommentResource

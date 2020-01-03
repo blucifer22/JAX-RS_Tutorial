@@ -2,9 +2,7 @@ package org.example.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @XmlRootElement//This annotation uses JAXB to convert the output of this class to parsable XML
 public class Message {
@@ -14,6 +12,7 @@ public class Message {
     private Date created; //Message timestamp
     private String author; //Message author
     private static Map<Long, Comment> comments = new HashMap<>(); //Map of Message comments
+    private List<Link> links = new ArrayList<>();
 
     public Message()
     {
@@ -58,6 +57,25 @@ public class Message {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public List<Link> getLinks() {
+        return links;
+    }
+
+    public void setLinks(List<Link> links) {
+        this.links = links;
+    }
+
+    /**
+     * Convenience method to add links and relations.
+     */
+    public void addLink(String url, String rel)
+    {
+        Link link = new Link();
+        link.setLink(url);
+        link.setRel(rel);
+        links.add(link);
     }
 
     @XmlTransient //Keeps the comment data from being pulled up when the Message is being converted to XML/JSON
