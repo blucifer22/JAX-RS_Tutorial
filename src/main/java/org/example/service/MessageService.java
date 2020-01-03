@@ -2,6 +2,7 @@ package org.example.service;
 
 import org.example.database.DatabaseClass;
 import org.example.exception.DataNotFoundException;
+import org.example.exception.MessageNotFoundException;
 import org.example.model.Message;
 
 import java.util.ArrayList;
@@ -96,7 +97,7 @@ public class MessageService {
     public Message updateMessage(Message message)
     {
         if(message.getId() <= 0)
-            return null;
+            throw new MessageNotFoundException("The message ID " + message.getId() + " is invalid.");
         messages.put(message.getId(), message);
         return message;
     }
