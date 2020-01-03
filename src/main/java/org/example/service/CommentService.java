@@ -2,8 +2,12 @@ package org.example.service;
 
 import org.example.database.DatabaseClass;
 import org.example.model.Comment;
+import org.example.model.ErrorMessage;
 import org.example.model.Message;
 
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +24,19 @@ public class CommentService {
 
     public Comment getComment(long messageId, long commentId)
     {
-        Map<Long, Comment> comments = messages.get(messageId).getComments();
+        ErrorMessage errorMessage = new ErrorMessage("Not found", 404, "https://www.embarcfitness.com");
+        Response response = Response.status(Response.Status.NOT_FOUND).entity(errorMessage).build(); //Build your response
+        Message message = messages.get(messageId);
+
+        if(message == null)
+            throw new WebApplicationException(response); //No need to map, this ships with Jersey. Pass and go!
+
+        Map<Long, Comment> comments = message.getComments();
+        Comment comment = comments.get(commentId);
+
+        if(comment == null)
+            throw new NotFoundException(response);
+
         return comments.get(commentId);
     }
 

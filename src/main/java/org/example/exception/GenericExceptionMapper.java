@@ -6,7 +6,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
-@Provider //Tag this as an exception mapper so JAX-RS knows WTF it's doing!
+//@Provider //Tag this as an exception mapper so JAX-RS knows WTF it's doing!
 public class GenericExceptionMapper implements ExceptionMapper<Throwable> {
 
     @Override
